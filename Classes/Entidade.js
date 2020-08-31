@@ -6,7 +6,7 @@ export default class Entidade {
 		// Fisicas
 		this.plataforma	= false;
 		this.friccao		= 0;
-		this.grav				= 0;
+		this.grav				= 0.25;
 		this.x					= 0;
 		this.y					= 0;
 		this.xveloc			= 0;
@@ -25,7 +25,17 @@ export default class Entidade {
 	}
 	
 	update(){
-		console.log("update!");
+		//Fisicas
+		if(this.plataforma === true){
+			this.yveloc = 0;
+		}else{
+			this.yveloc += this.grav;
+		}
+		
+		this.x += this.xveloc;
+		this.y += this.yveloc;
+		
+		//Animacoes
 	}
 	
 	draw(){
@@ -36,7 +46,7 @@ export default class Entidade {
 			this.ctx.scale(-1, 1);
 			_x = -(this.x + 48);
 		}
-		this.ctx.drawImage(this.spriteSheet, _frameX, _frameY, 16, 16, _x,this.y, 48, 48);
+		this.ctx.drawImage(this.spriteSheet, _frameX, _frameY, 16, 16, Math.floor(_x),this.y, 48, 48);
 		
 		this.ctx.restore();
 	}
