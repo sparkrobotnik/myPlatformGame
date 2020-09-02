@@ -6,8 +6,8 @@ export default class Entidade {
 		// Fisicas
 		this.plataforma	= false;
 		this.friccao		= 0;
-		this.grav				= 0.25;
-		this.x					= 0;
+		this.grav				= 0;
+		this.x					= 64;
 		this.y					= 0;
 		this.xveloc			= 0;
 		this.yveloc			= 0;
@@ -24,12 +24,15 @@ export default class Entidade {
 		this.fEnd				= 0;
 	}
 	
-	update(){
+	update(_dTime, _tGri){
 		//Fisicas
 		if(this.plataforma === true){
 			this.yveloc = 0;
 		}else{
-			this.yveloc += this.grav;
+			if(this.yveloc + this.grav < 16)
+			{
+				this.yveloc += this.grav;
+			}
 		}
 		
 		this.x += this.xveloc;
@@ -38,15 +41,15 @@ export default class Entidade {
 		//Animacoes
 	}
 	
-	draw(){
-		let _frameX=0, _frameY=0, _x=this.x;
+	draw(_gameScale){
+		let _frameX = 0, _frameY = 0, _x = this.x;
 		this.ctx.save();
 		
 		if(this.animDirX == -1){
 			this.ctx.scale(-1, 1);
 			_x = -(this.x + 48);
 		}
-		this.ctx.drawImage(this.spriteSheet, _frameX, _frameY, 16, 16, Math.floor(_x),this.y, 48, 48);
+		this.ctx.drawImage(this.spriteSheet, _frameX, _frameY, 16, 16, Math.floor(_x) * _gameScale, this.y * _gameScale, 16 * _gameScale, 16 * _gameScale);
 		
 		this.ctx.restore();
 	}

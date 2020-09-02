@@ -1,7 +1,13 @@
-import Jogador from "./Classes/Jogador.js";
+import Jogador	from "./Classes/Jogador.js";
+import Stage		from "./Classes/Stage.js";
 
 // o jogo inicia depois de toda a pagina ter carregado
 $(document).ready(() => {
+	// escala dos graficos do jogo
+	var gameScale = 3;
+	
+	// variaveis para contagem de fps
+	var secondsPassed = 0, oldTimeStamp = 0, fps = 0;
 	
 	// definir o contexto para exibir/desenhar os graficos na tela
 	const ctx = document.getElementById("canvas").getContext("2d");
@@ -11,8 +17,11 @@ $(document).ready(() => {
 	ctx.imageSmoothingEnabled = false;
 	
 	// definir as dimensoes do canvas/tela do jogo
-	$("#canvas").width(window.innerWidth -5);
-	$("#canvas").height(window.innerHeight - 5);
+	if(window.innerHeight < 360){
+		ctx.canvas.height = window.innerHeight	- 2;
+		ctx.canvas.width	= window.innerWidth 	- 2;
+	}
+	console.log(ctx);
 	
 	// instancia o objeto do jogador
 	var jogador = new Jogador(ctx, "Recursos/Sprites/boy.png", 64, 16);
@@ -22,16 +31,31 @@ $(document).ready(() => {
 	var entidades = [];
 	entidades.push(jogador);
 	
+	// instancia uma fase onde todos as entidades vão interagir
+	var stage = new Stage("Recursos/Sprites/tile", 16, 16, 10, 10);
+	
 	// funcao onde o jogo inteiro é executado
-	const gameLoop = () => {
+	const gameLoop = (timeStamp) => {
 		// limpa a tela para o proximo frame ser desenhado
-		ctx.clearRect(0, 0, $("#canvas").width(), 360);
+		ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 		
 		// atualiza e "desenha" todas as entidades no array
 		entidades.forEach((entidade) => {
-			entidade.draw();
-			entidade.update();
+			entidade.draw(gameScale);
+			let resposta = entidade.update(1, stage.grid);
 		});
+		
+		// calcular fps
+		secondsPassed = (timeStamp - oldTimeStamp) / 1000;
+		oldTimeStamp = timeStamp;
+		fps = Math.round(1 / secondsPassed);
+		
+		// exibir fps
+		ctx.fillStyle = "white";
+		ctx.fillRect(0, 0, 50, 15);
+		ctx.font = '15px Arial';
+		ctx.fillStyle = 'black';
+		ctx.fillText("FPS: " + fps, 0, 15);
 		
 		// espera a disponibilidade para executar o proximo frame
 		requestAnimationFrame(gameLoop);
@@ -39,5 +63,4 @@ $(document).ready(() => {
 	
 	// esperar a disponibilidade para executar o primeiro frame
 	requestAnimationFrame(gameLoop);
-	
 });
