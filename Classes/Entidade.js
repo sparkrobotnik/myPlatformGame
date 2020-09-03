@@ -5,9 +5,9 @@ export default class Entidade {
 		
 		// Fisicas
 		this.plataforma	= false;
-		this.friccao		= 0;
-		this.grav				= 0;
-		this.x					= 64;
+		this.friccao		= 0.2;
+		this.grav				= 0.2;
+		this.x					= 0;
 		this.y					= 0;
 		this.xveloc			= 0;
 		this.yveloc			= 0;
@@ -29,7 +29,7 @@ export default class Entidade {
 		if(this.plataforma === true){
 			this.yveloc = 0;
 		}else{
-			if(this.yveloc + this.grav < 16)
+			if(this.yveloc + this.grav < 8)
 			{
 				this.yveloc += this.grav;
 			}
