@@ -1,11 +1,13 @@
 {
+	"colunas":14,
+	"linhas":	6,
+	
 	"player":	{
 		"x":	0,
 		"y":	0
 	},
 	
 	"tiles":	[
-		//[gridX, gridY, rangeX, rangeY, tileIndex, solid?]
 		[0,		15,		16,		2,		5,		true],
 		[8,		14,		8,		1,		5,		true]
 	],

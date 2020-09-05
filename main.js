@@ -21,7 +21,7 @@ $(document).ready(() => {
 		ctx.canvas.height = window.innerHeight	- 2;
 		ctx.canvas.width	= window.innerWidth 	- 2;
 	}
-	console.log(ctx);
+	
 	
 	// instancia o objeto do jogador
 	var jogador = new Jogador(ctx, "Recursos/Sprites/boy.png", 64, 16);
