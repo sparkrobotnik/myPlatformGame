@@ -32,7 +32,9 @@ $(document).ready(() => {
 	entidades.push(jogador);
 	
 	// instancia uma fase onde todos as entidades vão interagir
-	var stage = new Stage(ctx, "Recursos/Sprites/tile.png", 16, 16, 14, 6);
+	var stage = new Stage("Recursos/Sprites/tileset_teste.png", 16, 16, 14, 6);
+	stage.load("Recursos/Fases/fase01.json");
+	console.log(stage);
 	
 	// funcao onde o jogo inteiro é executado
 	const gameLoop = (timeStamp) => {
@@ -40,7 +42,7 @@ $(document).ready(() => {
 		ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 		
 		// renderiza a fase
-		stage.draw(gameScale);
+		stage.draw(ctx, gameScale);
 		
 		// atualiza e "desenha" todas as entidades no canvas/tela
 		entidades.forEach((entidade) => {
