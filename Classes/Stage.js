@@ -9,8 +9,10 @@ export default class Stage {
 	
 	load(_jsonFile){
 		$.getJSON(_jsonFile, (result) => {
+			// definir recurso(imagem/sprite) a ser usado
 			this.tileset			= new Image(result.tilesetWidth, result.tilesetHeight);
 			this.tileset.src	= result.tileset;
+			// definir dimensoes da fase em linhas e colunas
 			this.colunas			= result.colunas;
 			this.linhas 			= result.linhas;
 			
