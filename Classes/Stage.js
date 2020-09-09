@@ -4,6 +4,7 @@ export default class Stage {
 		this.grid	= [];
 		this.colunas;
 		this.linhas;
+		this.carregado = false;
 		this.load(_jsonFile);
 	}
 	
@@ -19,10 +20,14 @@ export default class Stage {
 			for(let i = 0; i < this.colunas; i ++){ this.grid.push([]); }
 			this.grid.forEach((coluna) => {
 				for(let i = 0; i < this.linhas; i ++){
-					coluna.push({tile:0, solid:false});
+					coluna.push({tile:6, solid:false});
 				}
 			});
 		});
+	}
+	
+	update(){
+		
 	}
 	
 	draw(_ctx, _gameScale){
@@ -31,8 +36,9 @@ export default class Stage {
 		for(let x = 0; x < this.colunas; x ++){
 			for(let y = 0; y < this.linhas; y ++){
 				if(this.grid[x][y].tile != -1){
-					_ctx.drawImage(this.tileset, 0, 0, 16, 16, _tileSize * x, _tileSize * y, _tileSize, _tileSize);
+					_ctx.drawImage(this.tileset, Math.floor((this.grid[x][y].tile * 16) % this.tileset.width), Math.floor((this.grid[x][y].tile * 16) / this.tileset.width) * 16, 16, 16, _tileSize * x, _tileSize * y, _tileSize, _tileSize);
 				}
+				
 			}
 		}
 	}

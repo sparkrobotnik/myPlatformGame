@@ -1,7 +1,7 @@
 {
-	"tileset":"Recursos/Sprites/tile.png",
-	"tilesetWidth":16,
-	"tilesetHeight":16,
+	"tileset":"Recursos/Sprites/tileset_teste.png",
+	"tilesetWidth":96,
+	"tilesetHeight":80,
 	"colunas":14,
 	"linhas":	6,
 	"player":	{
