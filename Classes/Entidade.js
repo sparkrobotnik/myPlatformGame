@@ -5,7 +5,7 @@ export default class Entidade {
 		
 		// Fisicas
 		this.plataforma	= false;
-		this.friccao		= 0.2;
+		this.friccao		= 0.05;
 		this.grav				= 0.2;
 		this.x					= 0;
 		this.y					= 0;
