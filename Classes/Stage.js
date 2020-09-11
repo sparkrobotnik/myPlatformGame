@@ -31,7 +31,23 @@ export default class Stage {
 				}
 			});
 			
-			
+			result.tiles.forEach((layout) => {
+				// carregando layouts
+				let xComeco = layout[0];
+				let yComeco = layout[1];
+				let xFinal	= Util.clamp(xComeco + layout[2], 0, this.colunas);
+				let yFinal	= Util.clamp(yComeco + layout[3], 0, this.linhas);
+				let tile		= layout[4];
+				let solid		= layout[5];
+				
+				// definindo layout
+				for(let x = xComeco; x < xFinal; x ++){
+					for(let y = yComeco; y < yFinal; y ++){
+						this.grid[x][y].tile = tile;
+						this.grid[x][y].solid = solid;
+					}
+				}
+			});
 		});
 	}
 	
@@ -45,7 +61,7 @@ export default class Stage {
 		for(let x = 0; x < this.colunas; x ++){
 			for(let y = 0; y < this.linhas; y ++){
 				if(this.grid[x][y].tile != -1){
-					_ctx.drawImage(this.tileset, Math.floor((this.grid[x][y].tile * 16) % this.tileset.width), Math.floor((this.grid[x][y].tile * 16) / this.tileset.width) * 16, 16, 16, _tileSize * x, _tileSize * y, _tileSize, _tileSize);
+					_ctx.drawImage(this.tileset, 0, 0, 16, 16, _tileSize * x, _tileSize * y, _tileSize, _tileSize);
 				}
 			}
 		}
