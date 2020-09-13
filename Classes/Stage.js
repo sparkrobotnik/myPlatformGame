@@ -26,6 +26,13 @@ export default class Stage {
 			this.colunas				= resultado.colunas;
 			this.linhas 				= resultado.linhas;
 			
+			// mapeando tileset
+			for(let y = 0; y < this.tilesetAltura; y += 16){
+				for(let x = 0; x < this.tilesetLargura; x += 16){
+					this.tilesetIndex.push({x: x, y: y});
+				}
+			}
+			
 			// criando espaço vazio
 			for(let i = 0; i < this.colunas; i ++){ this.grade.push([]); }
 			this.grade.forEach((coluna) => {
