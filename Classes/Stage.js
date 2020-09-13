@@ -1,50 +1,54 @@
 import Util from "./Util.js";
 
 export default class Stage {
-	constructor(_jsonFile){
+	constructor(_arquivoJSON){
 		this.tileset;
-		this.grid	= [];
+		this.tilesetIndex = [];
+		this.tilesetLargura;
+		this.tilesetAltura;
+		this.grade = [];
 		this.colunas;
 		this.linhas;
-		this.width = 0;
-		this.height = 0;
-		this.carregado = false;
-		this.load(_jsonFile);
+		
+		// carregar fase predefinida
+		this.carregar(_arquivoJSON);
 	}
 	
-	load(_jsonFile){
-		$.getJSON(_jsonFile, (result) => {
+	carregar(_arquivoJSON){
+		$.getJSON(_arquivoJSON, (resultado) => {
 			// definir recurso(imagem/sprite) a ser usado
-			this.tileset			= new Image(result.tilesetWidth, result.tilesetHeight);
-			this.tileset.src	= result.tileset;
-			// definir dimensoes da fase em linhas e colunas
-			this.colunas			= result.colunas;
-			this.linhas 			= result.linhas;
-			// dimensoes da fase em pixels
-			this.width				= this.colunas * 16;
-			this.height				= this.height * 16;
+			this.tilesetLargura	= resultado.tilesetLargura;
+			this.tilesetAltura	= resultado.tilesetAltura;
+			this.tileset				= new Image(this.tilesetLargura, this.tilesetAltura);
+			this.tileset.src		= resultado.tileset;
 			
-			for(let i = 0; i < this.colunas; i ++){ this.grid.push([]); }
-			this.grid.forEach((coluna) => {
+			// definir dimensoes da fase em linhas e colunas
+			this.colunas				= resultado.colunas;
+			this.linhas 				= resultado.linhas;
+			
+			// criando espaço vazio
+			for(let i = 0; i < this.colunas; i ++){ this.grade.push([]); }
+			this.grade.forEach((coluna) => {
 				for(let i = 0; i < this.linhas; i ++){
-					coluna.push({tile:-1, solid:false});
+					coluna.push({tile:-1, solido:false});
 				}
 			});
 			
-			result.tiles.forEach((layout) => {
-				// carregando layouts
+			// carregando layouts
+			resultado.tiles.forEach((layout) => {
+				// carregando layout atual
 				let xComeco = layout[0];
 				let yComeco = layout[1];
 				let xFinal	= Util.clamp(xComeco + layout[2], 0, this.colunas);
 				let yFinal	= Util.clamp(yComeco + layout[3], 0, this.linhas);
 				let tile		= layout[4];
-				let solid		= layout[5];
+				let solido	= layout[5];
 				
 				// definindo layout
 				for(let x = xComeco; x < xFinal; x ++){
 					for(let y = yComeco; y < yFinal; y ++){
-						this.grid[x][y].tile = tile;
-						this.grid[x][y].solid = solid;
+						this.grade[x][y].tile = tile;
+						this.grade[x][y].solido = solido;
 					}
 				}
 			});
@@ -55,13 +59,13 @@ export default class Stage {
 		
 	}
 	
-	draw(_ctx, _gameScale){
-		let _tileSize = 16 * _gameScale;
+	draw(_ctx, _escala){
+		let _tileTamanho	= 16 * _escala;
 		
 		for(let x = 0; x < this.colunas; x ++){
 			for(let y = 0; y < this.linhas; y ++){
-				if(this.grid[x][y].tile != -1){
-					_ctx.drawImage(this.tileset, 0, 0, 16, 16, _tileSize * x, _tileSize * y, _tileSize, _tileSize);
+				if(this.grade[x][y].tile != -1){
+					_ctx.drawImage(this.tileset, this.tileset[ this.grade[x][y].tile ].x, this.tileset[ this.grade[x][y].tile ].y, 16, 16, _tileTamanho * x, _tileTamanho * y, _tileTamanho, _tileTamanho);
 				}
 			}
 		}

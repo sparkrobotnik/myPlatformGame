@@ -33,8 +33,7 @@ $(document).ready(() => {
 	
 	// instancia uma fase onde todos as entidades vão interagir
 	var stage = new Stage("Recursos/Sprites/tileset_teste.png", 16, 16, 14, 6);
-	stage.load("Recursos/Fases/fase01.json");
-	console.log(stage);
+	stage.carregar("Recursos/Fases/fase01.json");
 	
 	// funcao onde o jogo inteiro é executado
 	const gameLoop = (timeStamp) => {
