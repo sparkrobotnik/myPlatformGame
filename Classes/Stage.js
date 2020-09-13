@@ -3,7 +3,7 @@ import Util from "./Util.js";
 export default class Stage {
 	constructor(_arquivoJSON){
 		this.tileset;
-		this.tilesetIndex = [];
+		this.tilesetMap = [];
 		this.tilesetLargura;
 		this.tilesetAltura;
 		this.grade = [];
@@ -29,7 +29,7 @@ export default class Stage {
 			// mapeando tileset
 			for(let y = 0; y < this.tilesetAltura; y += 16){
 				for(let x = 0; x < this.tilesetLargura; x += 16){
-					this.tilesetIndex.push({x: x, y: y});
+					this.tilesetMap.push({x: x, y: y});
 				}
 			}
 			
@@ -72,7 +72,7 @@ export default class Stage {
 		for(let x = 0; x < this.colunas; x ++){
 			for(let y = 0; y < this.linhas; y ++){
 				if(this.grade[x][y].tile != -1){
-					_ctx.drawImage(this.tileset, this.tileset[ this.grade[x][y].tile ].x, this.tileset[ this.grade[x][y].tile ].y, 16, 16, _tileTamanho * x, _tileTamanho * y, _tileTamanho, _tileTamanho);
+					_ctx.drawImage(this.tileset, this.tilesetMap[ this.grade[x][y].tile ].x, this.tilesetMap[ this.grade[x][y].tile ].y, 16, 16, _tileTamanho * x, _tileTamanho * y, _tileTamanho, _tileTamanho);
 				}
 			}
 		}

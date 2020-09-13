@@ -1,5 +1,6 @@
 import Jogador	from "./Classes/Jogador.js";
 import Stage		from "./Classes/Stage.js";
+import Paleta		from "./Classes/Paleta.js";
 
 // o jogo inicia depois de toda a pagina ter carregado
 $(document).ready(() => {
@@ -38,7 +39,8 @@ $(document).ready(() => {
 	// funcao onde o jogo inteiro é executado
 	const gameLoop = (timeStamp) => {
 		// limpa a tela para o proximo frame ser desenhado
-		ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+		ctx.fillStyle = Paleta.azul;
+		ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 		
 		// renderiza a fase
 		stage.draw(ctx, gameScale);
