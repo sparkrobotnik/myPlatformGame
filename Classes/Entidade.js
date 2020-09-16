@@ -33,13 +33,13 @@ export default class Entidade {
 		if(Util.inRange(this.y, 0, faseAltura - 16) && Util.inRange(this.x, 0, faseLargura)){
 			let tilePosicoes = {
 				base : {
-					esquerda : 0,
-					direita : 0
+					esquerda :	_grade[Util.clamp(Math.floor(this.x / 16),				0, _grade.length - 1)][Util.clamp(Math.floor((this.y + 16) / 16) + 1, 0, _grade[0].length - 1)].solid,
+					direita : 	_grade[Util.clamp(Math.floor((this.x + 16) / 16), 0, _grade.length - 1)][Util.clamp(Math.floor((this.y + 16) / 16) + 1, 0, _grade[0].length - 1)].solid
 				},
 				
 				topo : {
-					esquerda : 0,
-					direita : 0
+					esquerda :	_grade[Util.clamp(Math.floor(this.x / 16),				0, _grade.length - 1)][Util.clamp(Math.floor((this.y - 16) / 16) + 1, 0, _grade[0].length - 1)].solid,
+					direita : 	_grade[Util.clamp(Math.floor((this.x + 16) / 16), 0, _grade.length - 1)][Util.clamp(Math.floor((this.y - 16) / 16) + 1, 0, _grade[0].length - 1)].solid
 				},
 				
 				esquerda : {
@@ -49,7 +49,7 @@ export default class Entidade {
 				
 				direita : {
 					topo : 0,
-					base : 
+					base : 0
 				}
 			}
 		}
