@@ -1,11 +1,14 @@
-import Jogador	from "./Classes/Jogador.js";
+import Util			from "./Classes/Util.js";
 import Stage		from "./Classes/Stage.js";
 import Paleta		from "./Classes/Paleta.js";
+import Gamepad	from "./Classes/Gamepad.js";
 
 // o jogo inicia depois de toda a pagina ter carregado
 $(document).ready(() => {
 	// escala dos graficos do jogo
-	var gameScale = 3;
+	var escala = 3;
+	var pausa = false;
+	Gamepad.iniciar();
 	
 	// variaveis para contagem de fps
 	var secondsPassed = 0, oldTimeStamp = 0, fps = 0;
@@ -23,48 +26,37 @@ $(document).ready(() => {
 		ctx.canvas.width	= window.innerWidth 	- 2;
 	}
 	
-	
-	// instancia o objeto do jogador
-	var jogador = new Jogador(ctx, "Recursos/Sprites/boy.png", 64, 16);
-	
-	// para renderizar e atualizar, todas as entidade/objetos ficam
-	// dentro deste array e adiciona o jogador para esse array
-	var entidades = [];
-	entidades.push(jogador);
-	
-	// instancia uma fase onde todos as entidades vão interagir
-	var stage = new Stage("Recursos/Sprites/tileset_teste.png", 16, 16, 14, 6);
-	stage.carregar("Recursos/Fases/fase01.json");
+	// instancia uma fase onde todos as entidades vão interagir.
+	// carrega layout da fase, jogador, inimigos, etc apartir de
+	// um arquivo .json
+	var stage = new Stage("Recursos/Fases/fase01.json");
 	
 	// funcao onde o jogo inteiro é executado
 	const gameLoop = (timeStamp) => {
+		
 		// limpa a tela para o proximo frame ser desenhado
 		ctx.fillStyle = Paleta.azul;
 		ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 		
-		// renderiza a fase
-		stage.draw(ctx, gameScale);
-		
-		// atualiza e "desenha" todas as entidades no canvas/tela
-		entidades.forEach((entidade) => {
-			entidade.draw(gameScale);
-			let resposta = entidade.update(1, stage.grid);
-		});
+		// renderiza e atualiza a fase
+		stage.update();
+		stage.draw(ctx, escala);
 		
 		// calcular fps
 		secondsPassed = (timeStamp - oldTimeStamp) / 1000;
 		oldTimeStamp = timeStamp;
-		fps = Math.round(1 / secondsPassed);
+		fps = Util.clamp(Math.floor(1 / secondsPassed), 0, 60);
 		
 		// exibir fps
 		ctx.fillStyle = "white";
-		ctx.fillRect(0, 0, 50, 15);
+		ctx.fillRect(0, ctx.canvas.height - 15, 50, 15);
 		ctx.font = '15px Arial';
 		ctx.fillStyle = 'black';
-		ctx.fillText("FPS: " + fps, 0, 15);
+		ctx.fillText("FPS: " + fps, 0, ctx.canvas.height);
 		
 		// espera a disponibilidade para executar o proximo frame
 		requestAnimationFrame(gameLoop);
+		
 	}
 	
 	// esperar a disponibilidade para executar o primeiro frame

@@ -1,4 +1,5 @@
-import Util from "./Util.js";
+import Util 		from "./Util.js";
+import Jogador	from "./Jogador.js";
 
 export default class Stage {
 	constructor(_arquivoJSON){
@@ -9,6 +10,7 @@ export default class Stage {
 		this.grade = [];
 		this.colunas;
 		this.linhas;
+		this.entidades = [];
 		
 		// carregar fase predefinida
 		this.carregar(_arquivoJSON);
@@ -58,12 +60,19 @@ export default class Stage {
 						this.grade[x][y].solido = solido;
 					}
 				}
+				
+				// adicionar jogador
+				this.adicionar_entidade(new Jogador("Recursos/Sprites/boy.png", resultado.jogador.x, resultado.jogador.y));
 			});
 		});
 	}
 	
+	adicionar_entidade(_entidade){
+		this.entidades.push(_entidade);
+	}
+	
 	update(){
-		
+		this.entidades.forEach((entidade) => entidade.update(this.grade));
 	}
 	
 	draw(_ctx, _escala){
@@ -76,5 +85,7 @@ export default class Stage {
 				}
 			}
 		}
+		
+		this.entidades.forEach((entidade) => entidade.draw(_ctx, _escala));
 	}
 }

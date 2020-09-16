@@ -5,8 +5,8 @@
 	"colunas":14,
 	"linhas":	6,
 	"jogador":	{
-		"x":	0,
-		"y":	0
+		"x":	64,
+		"y":	16
 	},
 	
 	"tiles":[

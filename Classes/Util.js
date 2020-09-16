@@ -10,4 +10,14 @@ export default class Util {
 			return _x;
 		}
 	}
+	
+	static inRange(_x, _min, _max){
+		if(_x >= _min && _x <= _max){
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }
