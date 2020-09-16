@@ -38,12 +38,12 @@ export default class Entidade {
 				},
 				
 				topo : {
-					esquerda :	_grade[Util.clamp(Math.floor(this.x / 16),				0, _grade.length - 1)][Util.clamp(Math.floor((this.y - 16) / 16) + 1, 0, _grade[0].length - 1)].solid,
-					direita : 	_grade[Util.clamp(Math.floor((this.x + 16) / 16), 0, _grade.length - 1)][Util.clamp(Math.floor((this.y - 16) / 16) + 1, 0, _grade[0].length - 1)].solid
+					esquerda :	_grade[Util.clamp(Math.floor(this.x / 16),				0, _grade.length - 1)][Util.clamp(Math.floor(this.y / 16) - 1, 0, _grade[0].length - 1)].solid,
+					direita : 	_grade[Util.clamp(Math.floor((this.x + 16) / 16), 0, _grade.length - 1)][Util.clamp(Math.floor(this.y / 16) - 1, 0, _grade[0].length - 1)].solid
 				},
 				
 				esquerda : {
-					topo : 0,
+					topo :			_grade[Util.clamp(Math.floor(this.x / 16) - 1,		0, _grade.length - 1)][Util.clamp(Math.floor(this.y / 16), 0, _grade[0].length - 1)].solid,
 					base : 0
 				},
 				
