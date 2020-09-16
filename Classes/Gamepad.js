@@ -1,7 +1,7 @@
 export default class Gamepad {
 	static definido 	= false;
 	static index			= null;
-	static id 				= null;
+	
 	static direcional	= [
 		{ nome: "para cima",	botao: null, pressionado: false },
 		{ nome: "para baixo",	botao: null, pressionado: false },
@@ -21,12 +21,11 @@ export default class Gamepad {
 		window.addEventListener("gamepaddisconnected", Gamepad.desconectado);
 	}
 	
-	static definir_botoes(e){
-		console.log(e);
-		Gamepad.id = e.gamepad.id;
+	static definir_botoes(){
+		
 	}
 	
-	static update(e){
+	static update(){
 		
 	}
 	

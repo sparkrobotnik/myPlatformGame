@@ -6,7 +6,7 @@
 	"linhas":	6,
 	"jogador":	{
 		"x":	64,
-		"y":	16
+		"y":	128
 	},
 	
 	"tiles":[

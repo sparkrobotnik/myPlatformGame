@@ -39,6 +39,7 @@ $(document).ready(() => {
 		ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 		
 		// renderiza e atualiza a fase
+		Gamepad.update();
 		stage.update();
 		stage.draw(ctx, escala);
 		

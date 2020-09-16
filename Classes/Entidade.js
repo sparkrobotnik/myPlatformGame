@@ -27,20 +27,29 @@ export default class Entidade {
 	
 	update(_grade){
 		// Colisões com plataformas
-		// Chão
-		if(this.yveloc > 0 && this.y + 16 < _grade[0].length * 16){
-			let baseColisao = {
-				posY:			(Math.floor(this.y / 16) + 1) * 16,
-				esquerda: _grade[Math.floor(this.x / 16)][Math.floor(this.y / 16) + 1].solido,
-				direita:	_grade[Math.floor(this.x + 16 / 16)][Math.floor(this.y / 16) + 1].solido,
-			}
-			
-			if(baseColisao.esquerda == true || baseColisao.direita == true){
-				let distancia = baseColisao.posY - (this.y + 16);
-				if(distancia < this.yveloc){
-					this.y += distancia;
-					this.yveloc = 0;
-					this.plataforma = true;
+		let faseLargura = (_grade.length - 1) * 16;
+		let faseAltura = (_grade[0].length - 1) * 16;
+		
+		if(Util.inRange(this.y, 0, faseAltura - 16) && Util.inRange(this.x, 0, faseLargura)){
+			let tilePosicoes = {
+				base : {
+					esquerda : 0,
+					direita : 0
+				},
+				
+				topo : {
+					esquerda : 0,
+					direita : 0
+				},
+				
+				esquerda : {
+					topo : 0,
+					base : 0
+				},
+				
+				direita : {
+					topo : 0,
+					base : 
 				}
 			}
 		}
