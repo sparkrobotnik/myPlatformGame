@@ -5,8 +5,9 @@ export default class Entidade {
 		this.acao				= "";
 		
 		// Fisicas
+		this.fisicas					= true;
 		this.plataforma				= false;
-		this.friccao					= 0.;
+		this.friccao					= 0.1;
 		this.grav							= 0.1;
 		this.x								= 0;
 		this.y								= 0;
@@ -25,34 +26,29 @@ export default class Entidade {
 		this.fFinal						= 0;
 	}
 	
-	update(_grade){
-		// Colisões com plataformas
-		let faseLargura = (_grade.length - 1) * 16;
-		let faseAltura = (_grade[0].length - 1) * 16;
+	update(fase){
+		this.plataforma = false;
 		
-		if(Util.inRange(this.y, 0, faseAltura - 16) && Util.inRange(this.x, 0, faseLargura)){
-			let tilePosicoes = {
-				base : {
-					esquerda :	_grade[Util.clamp(Math.floor(this.x / 16),				0, _grade.length - 1)][Util.clamp(Math.floor((this.y + 16) / 16) + 1, 0, _grade[0].length - 1)].solid,
-					direita : 	_grade[Util.clamp(Math.floor((this.x + 16) / 16), 0, _grade.length - 1)][Util.clamp(Math.floor((this.y + 16) / 16) + 1, 0, _grade[0].length - 1)].solid
-				},
-				
-				topo : {
-					esquerda :	_grade[Util.clamp(Math.floor(this.x / 16),				0, _grade.length - 1)][Util.clamp(Math.floor(this.y / 16) - 1, 0, _grade[0].length - 1)].solid,
-					direita : 	_grade[Util.clamp(Math.floor((this.x + 16) / 16), 0, _grade.length - 1)][Util.clamp(Math.floor(this.y / 16) - 1, 0, _grade[0].length - 1)].solid
-				},
-				
-				esquerda : {
-					topo :			_grade[Util.clamp(Math.floor(this.x / 16) - 1,		0, _grade.length - 1)][Util.clamp(Math.floor(this.y / 16), 0, _grade[0].length - 1)].solid,
-					base : 0
-				},
-				
-				direita : {
-					topo : 0,
-					base : 0
-				}
+		/*
+		let centro = {x: this.x + 8, y: this.y + 8 };
+		let fase = { altura: (_grade[0].length - 1) * 16, largura:(_grade.length - 1) * 16 };
+		let colisao = {
+			topo: 		_grade[Util.clamp(Math.floor(centro.x / 16), 0, _grade.length - 1)][Util.clamp(Math.floor(centro.y / 16), 0, _grade[0].length - 1)].solido,
+			base: 		_grade[Util.clamp(Math.floor(centro.x / 16), 0, _grade.length - 1)][Util.clamp(Math.floor((centro.y + 8) / 16), 0, _grade[0].length - 1)].solido,
+			parede:		_grade[Util.clamp(Math.floor(centro.x / 16), 0, _grade.length - 1)][Util.clamp(Math.floor(centro.y / 16), 0, _grade[0].length - 1)].solido,
+		}
+		
+		if(colisao.base){
+			let proxLinhaY = Util.clamp(Math.floor(centro.y / 16) + 1, 0, _grade[0].length - 1) * 16;
+			let distancia = proxLinhaY - (this.y + 16);
+			
+			if(distancia < this.yveloc){
+				this.y += distancia;
+				this.plataforma = true;
+				this.yveloc = 0;
 			}
 		}
+		*/
 		
 		// Fisicas
 		if(this.plataforma == true){ this.yveloc = 0; }

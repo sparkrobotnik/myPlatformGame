@@ -12,39 +12,48 @@ export default class Stage {
 		this.linhas;
 		this.entidades = [];
 		
+		// adicionar jogador
+		this.adicionar_entidade(new Jogador("Recursos/Sprites/boy.png", 0, 0));
+		
 		// carregar fase predefinida
 		this.carregar(_arquivoJSON);
 	}
 	
-	carregar(_arquivoJSON){
-		$.getJSON(_arquivoJSON, (resultado) => {
-			// definir recurso(imagem/sprite) a ser usado
-			this.tilesetLargura	= resultado.tilesetLargura;
-			this.tilesetAltura	= resultado.tilesetAltura;
-			this.tileset				= new Image(this.tilesetLargura, this.tilesetAltura);
-			this.tileset.src		= resultado.tileset;
+	carregar(arquivoJSON){
+		let fase;
+		$.getJSON(arquivoJSON, (resultado) =>  fase = resultado );
+		/*if(fase === undefined){
+			window.alert("arquivo .json da fase não foi encontrado");
+			return;
+		}*/
+		
+		// definir recurso(imagem/sprite) a ser usado
+		this.tilesetLargura	= fase.tilesetLargura;
+		this.tilesetAltura	= fase.tilesetAltura;
+		this.tileset				= new Image(fase.tilesetLargura, fase.tilesetAltura);
+		this.tileset.src		= fase.tileset;
 			
-			// definir dimensoes da fase em linhas e colunas
-			this.colunas				= resultado.colunas;
-			this.linhas 				= resultado.linhas;
+		// definir dimensoes da fase em linhas e colunas
+		this.colunas				= fase.colunas;
+		this.linhas 				= fase.linhas;
 			
-			// mapeando tileset
-			for(let y = 0; y < this.tilesetAltura; y += 16){
-				for(let x = 0; x < this.tilesetLargura; x += 16){
-					this.tilesetMap.push({x: x, y: y});
-				}
+		// mapeando tileset
+		for(let y = 0; y < fase.tilesetAltura; y += 16){
+			for(let x = 0; x < fase.tilesetLargura; x += 16){
+				this.tilesetMap.push({x: x, y: y});
 			}
+		}
 			
-			// criando espaço vazio
-			for(let i = 0; i < this.colunas; i ++){ this.grade.push([]); }
-			this.grade.forEach((coluna) => {
+		// criando espaço vazio
+		for(let i = 0; i < this.colunas; i ++){ this.grade.push([]); }
+		this.grade.forEach((coluna) => {
 				for(let i = 0; i < this.linhas; i ++){
 					coluna.push({tile:-1, solido:false});
 				}
 			});
 			
-			// carregando layouts
-			resultado.tiles.forEach((layout) => {
+		// carregando layout da fase
+		fase.tiles.forEach((layout) => {
 				// carregando layout atual
 				let xComeco = layout[0];
 				let yComeco = layout[1];
@@ -60,19 +69,16 @@ export default class Stage {
 						this.grade[x][y].solido = solido;
 					}
 				}
-				
-				// adicionar jogador
-				this.adicionar_entidade(new Jogador("Recursos/Sprites/boy.png", resultado.jogador.x, resultado.jogador.y));
 			});
-		});
 	}
 	
 	adicionar_entidade(_entidade){
 		this.entidades.push(_entidade);
+		console.log(this);
 	}
 	
 	update(){
-		this.entidades.forEach((entidade) => entidade.update(this.grade));
+		this.entidades.forEach((entidade) => entidade.update(this));
 	}
 	
 	draw(_ctx, _escala){
